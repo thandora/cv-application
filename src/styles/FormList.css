@@ -1,0 +1,9 @@
+.forms-container {
+  transition: scale 0.1s ease-in-out;
+  transform-origin: top;
+}
+
+.forms-container.minimized {
+  scale: 1 0;
+  visibility: hidden;
+}
