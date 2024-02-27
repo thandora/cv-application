@@ -1,3 +1,4 @@
+import "../styles/Form.css";
 import PropTypes from "prop-types";
 import { Fragment, useState } from "react";
 import { Field } from "./Field";
@@ -15,10 +16,6 @@ function Form({ title, fields, isDeletable }) {
       tempFields[fieldId] = field;
       setFields(tempFields);
     };
-  }
-
-  function display() {
-    console.log(currentFields);
   }
 
   function toggleVisibility() {
@@ -46,8 +43,6 @@ function Form({ title, fields, isDeletable }) {
             </Fragment>
           );
         })}
-
-        <button onClick={display}>Click me</button>
       </form>
     </div>
   );
