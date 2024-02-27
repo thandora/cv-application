@@ -1,6 +1,7 @@
 import "./styles/App.css";
 import { Form } from "./components/Form";
 import { sampleFields, sampleForm, sampleFormList } from "./components/sampleData";
+import { FormList } from "./components/FormList";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <a href="#">This is an anchor</a>
       <button>This is a button.</button>
       <Form form={sampleForm} isDeletable={false} />
+      <FormList formList={sampleFormList} />
     </>
   );
 }
