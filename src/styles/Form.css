@@ -1,0 +1,10 @@
+.form {
+  background-color: #3f3f3f;
+  transition: scale 0.1s ease-in-out;
+  transform-origin: top;
+}
+
+.form.minimized {
+  scale: 1 0;
+  visibility: hidden;
+}
