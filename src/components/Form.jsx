@@ -4,15 +4,15 @@ import { Fragment, useState } from "react";
 import { Field } from "./Field";
 
 function Form({ form, isDeletable }) {
-  const [currentForm, setForm] = useState(form);
+  const [currForm, setForm] = useState(form);
   const [visible, setVisiblility] = useState(true);
 
-  function handleChange(fieldId) {
+  function updateForm(fieldId) {
     return function (e) {
-      const fieldIndex = currentForm.fields.findIndex((f) => f.id === fieldId);
-      const newFields = [...currentForm.fields];
+      const fieldIndex = currForm.fields.findIndex((f) => f.id === fieldId);
+      const newFields = [...currForm.fields];
       newFields[fieldIndex].value = e.target.value;
-      const newForm = { ...currentForm, newFields };
+      const newForm = { ...currForm, fields: newFields };
 
       setForm(newForm);
     };
@@ -39,7 +39,7 @@ function Form({ form, isDeletable }) {
                 name={field.name}
                 type={field.type}
                 value={field.value}
-                changeHandler={handleChange(field.id)}
+                changeHandler={updateForm(field.id)}
               />
             </Fragment>
           );
