@@ -3,18 +3,18 @@ import PropTypes from "prop-types";
 import { Fragment, useState } from "react";
 import { Field } from "./Field";
 
-function Form({ title, fields, isDeletable }) {
-  const [currentFields, setFields] = useState(fields);
+function Form({ form, isDeletable }) {
+  const [currentForm, setForm] = useState(form);
   const [visible, setVisiblility] = useState(true);
 
-  function handleChange(id) {
+  function handleChange(fieldId) {
     return function (e) {
-      const field = currentFields.find((field) => field.id === id);
-      const fieldId = currentFields.findIndex((field) => field.id === id);
-      const tempFields = [...currentFields];
-      field.value = e.target.value;
-      tempFields[fieldId] = field;
-      setFields(tempFields);
+      const fieldIndex = currentForm.fields.findIndex((f) => f.id === fieldId);
+      const newFields = [...currentForm.fields];
+      newFields[fieldIndex].value = e.target.value;
+      const newForm = { ...currentForm, newFields };
+
+      setForm(newForm);
     };
   }
 
@@ -25,13 +25,14 @@ function Form({ title, fields, isDeletable }) {
   return (
     <div className="form-container">
       <div className="header">
-        <h2>{title}</h2>
+        <h2>{form.title}</h2>
+        {/* TODO: implement delete */}
         {isDeletable && <button>Delete me</button>}
         <button onClick={toggleVisibility}>{visible ? "Hide" : "Show"}</button>
       </div>
 
       <form action="" className={visible ? "form" : "form minimized"}>
-        {fields.map((field) => {
+        {form.fields.map((field) => {
           return (
             <Fragment key={field.id}>
               <Field
@@ -49,6 +50,7 @@ function Form({ title, fields, isDeletable }) {
 }
 
 Form.propTypes = {
+  form: PropTypes.object,
   title: PropTypes.string,
   fields: PropTypes.array,
   isDeletable: PropTypes.bool,
