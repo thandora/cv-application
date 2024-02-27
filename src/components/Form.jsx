@@ -1,8 +1,10 @@
 import PropTypes from "prop-types";
 import { Fragment, useState } from "react";
+import { Field } from "./Field";
 
 function Form({ title, fields, isDeletable }) {
   const [currentFields, setFields] = useState(fields);
+  const [visible, setVisiblility] = useState(true);
 
   function handleChange(id) {
     return function (e) {
@@ -19,28 +21,35 @@ function Form({ title, fields, isDeletable }) {
     console.log(currentFields);
   }
 
+  function toggleVisibility() {
+    setVisiblility(!visible);
+  }
+
   return (
-    <form action="" className="form">
+    <div className="form-container">
       <div className="header">
         <h2>{title}</h2>
         {isDeletable && <button>Delete me</button>}
+        <button onClick={toggleVisibility}>{visible ? "Hide" : "Show"}</button>
       </div>
 
-      {fields.map((field) => {
-        return (
-          <Fragment key={field.id}>
-            <Field
-              name={field.name}
-              type={field.type}
-              value={field.value}
-              changeHandler={handleChange(field.id)}
-            />
-          </Fragment>
-        );
-      })}
+      <form action="" className={visible ? "form" : "form minimized"}>
+        {fields.map((field) => {
+          return (
+            <Fragment key={field.id}>
+              <Field
+                name={field.name}
+                type={field.type}
+                value={field.value}
+                changeHandler={handleChange(field.id)}
+              />
+            </Fragment>
+          );
+        })}
 
-      <button onClick={display}>Click me</button>
-    </form>
+        <button onClick={display}>Click me</button>
+      </form>
+    </div>
   );
 }
 
@@ -48,25 +57,6 @@ Form.propTypes = {
   title: PropTypes.string,
   fields: PropTypes.array,
   isDeletable: PropTypes.bool,
-};
-
-function Field({ name, type, value, changeHandler }) {
-  return (
-    <div className="form-row">
-      <label>
-        {name}
-        <input type={type} value={value} onChange={changeHandler} />
-      </label>
-    </div>
-  );
-}
-
-Field.propTypes = {
-  name: PropTypes.string,
-  type: PropTypes.string,
-  value: PropTypes.any,
-  field: PropTypes.object,
-  changeHandler: PropTypes.func,
 };
 
 export { Form };
