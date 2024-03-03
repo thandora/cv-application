@@ -9,12 +9,14 @@ function Form({ form, isDeletable }) {
 
   function updateForm(fieldId) {
     return function (e) {
-      const fieldIndex = currForm.fields.findIndex((f) => f.id === fieldId);
-      const newFields = [...currForm.fields];
-      newFields[fieldIndex].value = e.target.value;
-      const newForm = { ...currForm, fields: newFields };
+      const newFields = currForm.fields.map((field) => {
+        if (field.id === fieldId) {
+          return { ...field, value: e.target.value };
+        }
+        return { ...field };
+      });
 
-      setForm(newForm);
+      setForm({ ...currForm, fields: newFields });
     };
   }
 
@@ -25,14 +27,14 @@ function Form({ form, isDeletable }) {
   return (
     <div className="form-container">
       <div className="header">
-        <h2>{form.title}</h2>
+        <h2>{currForm.title}</h2>
         {/* TODO: implement delete */}
         {isDeletable && <button>Delete me</button>}
         <button onClick={toggleVisibility}>{visible ? "Hide" : "Show"}</button>
       </div>
 
       <form action="" className={visible ? "form" : "form minimized"}>
-        {form.fields.map((field) => {
+        {currForm.fields.map((field) => {
           return (
             <Fragment key={field.id}>
               <Field
@@ -45,6 +47,13 @@ function Form({ form, isDeletable }) {
           );
         })}
       </form>
+      <button
+        onClick={() => {
+          console.log(currForm);
+        }}
+      >
+        DEBOOG
+      </button>
     </div>
   );
 }
