@@ -4,7 +4,7 @@ function Field({ name, type, value, changeHandler }) {
   return (
     <div className="form-row">
       <label>
-        {name}
+        {name + ": "}
         <input type={type} value={value} onChange={changeHandler} />
       </label>
     </div>
