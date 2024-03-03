@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Fragment, useState } from "react";
 import { Field } from "./Field";
 
-function Form({ form, isDeletable }) {
+function Form({ form, deletable }) {
   const [currForm, setForm] = useState(form);
   const [visible, setVisiblility] = useState(true);
 
@@ -29,7 +29,7 @@ function Form({ form, isDeletable }) {
       <div className="header">
         <h2>{currForm.title}</h2>
         {/* TODO: implement delete */}
-        {isDeletable && <button>Delete me</button>}
+        {deletable && <button>Delete me</button>}
         <button onClick={toggleVisibility}>{visible ? "Hide" : "Show"}</button>
       </div>
 
@@ -47,13 +47,6 @@ function Form({ form, isDeletable }) {
           );
         })}
       </form>
-      <button
-        onClick={() => {
-          console.log(currForm);
-        }}
-      >
-        DEBOOG
-      </button>
     </div>
   );
 }
@@ -62,7 +55,7 @@ Form.propTypes = {
   form: PropTypes.object,
   title: PropTypes.string,
   fields: PropTypes.array,
-  isDeletable: PropTypes.bool,
+  deletable: PropTypes.bool,
 };
 
 export { Form };
