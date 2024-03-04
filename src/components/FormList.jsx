@@ -1,25 +1,22 @@
 import "../styles/FormList.css";
 import PropTypes from "prop-types";
-import { useState } from "react";
 import { Form } from "./Form";
 
-function FormList({ formList }) {
-  const [visible, setVisiblility] = useState(true);
-
-  function toggleVisibility() {
-    setVisiblility(!visible);
-  }
-
+function FormList({ formList, changeHandler, hasTitle }) {
   return (
-    <div className="form-container">
-      <div className="header">
-        <h2>{formList.title}</h2>
-        <button onClick={toggleVisibility}>{visible ? "Hide" : "Show"}</button>
-      </div>
+    <div className="forms-list">
+      <div className="header">{hasTitle && <h2>{formList.title}</h2>}</div>
 
-      <div className={visible ? "forms-container" : "forms-container minimized"}>
+      <div className="forms-container">
         {formList.forms.map((form) => {
-          return <Form key={form.id} form={form} isDeletable={true} />;
+          return (
+            <Form
+              key={form.id}
+              form={form}
+              isDeletable={true}
+              changeHandler={changeHandler(form.id)}
+            />
+          );
         })}
       </div>
     </div>
@@ -28,6 +25,8 @@ function FormList({ formList }) {
 
 FormList.propTypes = {
   formList: PropTypes.object,
+  hasTitle: PropTypes.bool,
+  changeHandler: PropTypes.func,
 };
 
 export { FormList };

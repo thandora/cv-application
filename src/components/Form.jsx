@@ -3,22 +3,8 @@ import PropTypes from "prop-types";
 import { Fragment, useState } from "react";
 import { Field } from "./Field";
 
-function Form({ form, deletable }) {
-  const [currForm, setForm] = useState(form);
+function Form({ form, deletable, changeHandler }) {
   const [visible, setVisiblility] = useState(true);
-
-  function updateForm(fieldId) {
-    return function (e) {
-      const newFields = currForm.fields.map((field) => {
-        if (field.id === fieldId) {
-          return { ...field, value: e.target.value };
-        }
-        return { ...field };
-      });
-
-      setForm({ ...currForm, fields: newFields });
-    };
-  }
 
   function toggleVisibility() {
     setVisiblility(!visible);
@@ -27,21 +13,21 @@ function Form({ form, deletable }) {
   return (
     <div className="form-container">
       <div className="header">
-        <h2>{currForm.title}</h2>
+        <h2>{form.title}</h2>
         {/* TODO: implement delete */}
         {deletable && <button>Delete me</button>}
         <button onClick={toggleVisibility}>{visible ? "Hide" : "Show"}</button>
       </div>
 
       <form action="" className={visible ? "form" : "form minimized"}>
-        {currForm.fields.map((field) => {
+        {form.fields.map((field) => {
           return (
             <Fragment key={field.id}>
               <Field
                 name={field.name}
                 type={field.type}
                 value={field.value}
-                changeHandler={updateForm(field.id)}
+                changeHandler={changeHandler(field.id)}
               />
             </Fragment>
           );
@@ -56,6 +42,7 @@ Form.propTypes = {
   title: PropTypes.string,
   fields: PropTypes.array,
   deletable: PropTypes.bool,
+  changeHandler: PropTypes.func,
 };
 
 export { Form };
