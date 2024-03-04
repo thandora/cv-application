@@ -1,25 +1,28 @@
 import "./styles/App.css";
-import { sampleFormListPersonal } from "./components/sampleData";
+import { sampleFormListEducation, sampleFormListPersonal } from "./components/sampleData";
 import { FormList } from "./components/FormList";
 import { useState } from "react";
 
 function App() {
-  const [formListPersonal, setFormList] = useState(structuredClone(sampleFormListPersonal));
+  const [formListPersonal, setListPersonal] = useState(structuredClone(sampleFormListPersonal));
+  const [formListEducation, setListEducation] = useState(structuredClone(sampleFormListEducation));
   const [activeIndex, setActiveIndex] = useState(0);
 
-  function updateFormList(formId) {
-    return function (fieldId) {
-      return function (e) {
-        const newFormList = structuredClone(formListPersonal);
+  function updateHandler(formList, setter) {
+    return function (formId) {
+      return function (fieldId) {
+        return function (e) {
+          const newFormList = structuredClone(formList);
 
-        const newForms = newFormList.forms.map((f) => {
-          if (f.id === formId) {
-            return updateForm(f, fieldId, e);
-          }
-          return structuredClone(f);
-        });
+          const newForms = newFormList.forms.map((f) => {
+            if (f.id === formId) {
+              return updateForm(f, fieldId, e);
+            }
+            return structuredClone(f);
+          });
 
-        setFormList({ ...formListPersonal, forms: newForms });
+          setter({ ...formList, forms: newForms });
+        };
       };
     };
   }
@@ -37,7 +40,20 @@ function App() {
 
   function displayNavContent(index) {
     const content = {
-      0: <FormList formList={formListPersonal} changeHandler={updateFormList} />,
+      0: (
+        <FormList
+          formList={formListPersonal}
+          changeHandler={updateHandler(formListPersonal, setListPersonal)}
+          formOptions={{ deletable: false, hideable: false }}
+        />
+      ),
+      1: (
+        <FormList
+          formList={formListEducation}
+          changeHandler={updateHandler(formListEducation, setListEducation)}
+          formOptions={{ deletable: false, hideable: true }}
+        />
+      ),
     };
     return content[index];
   }

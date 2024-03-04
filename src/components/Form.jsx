@@ -3,8 +3,9 @@ import PropTypes from "prop-types";
 import { Fragment, useState } from "react";
 import { Field } from "./Field";
 
-function Form({ form, deletable, changeHandler }) {
+function Form({ form, changeHandler, options = { deletable: false, hideable: false } }) {
   const [visible, setVisiblility] = useState(true);
+  const { deletable, hideable } = options;
 
   function toggleVisibility() {
     setVisiblility(!visible);
@@ -16,7 +17,7 @@ function Form({ form, deletable, changeHandler }) {
         <h2>{form.title}</h2>
         {/* TODO: implement delete */}
         {deletable && <button>Delete me</button>}
-        <button onClick={toggleVisibility}>{visible ? "Hide" : "Show"}</button>
+        {hideable && <button onClick={toggleVisibility}>{visible ? "Hide" : "Show"}</button>}
       </div>
 
       <form action="" className={visible ? "form" : "form minimized"}>
@@ -43,6 +44,7 @@ Form.propTypes = {
   fields: PropTypes.array,
   deletable: PropTypes.bool,
   changeHandler: PropTypes.func,
+  options: PropTypes.object,
 };
 
 export { Form };
