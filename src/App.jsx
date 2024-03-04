@@ -4,14 +4,21 @@ import {
   sampleFormListPersonal,
   sampleFormListWork,
 } from "./components/sampleData";
+import {
+  templateFormListPersonal,
+  templateFormListEducation,
+  templateFormListWork,
+} from "./components/dataTemplate";
 import { FormList } from "./components/FormList";
 import { Display } from "./components/Display";
 import { useState } from "react";
 
 function App() {
-  const [formListPersonal, setListPersonal] = useState(structuredClone(sampleFormListPersonal));
-  const [formListEducation, setListEducation] = useState(structuredClone(sampleFormListEducation));
-  const [formListWork, setListWork] = useState(structuredClone(sampleFormListWork));
+  const [formListPersonal, setListPersonal] = useState(structuredClone(templateFormListPersonal));
+  const [formListEducation, setListEducation] = useState(
+    structuredClone(templateFormListEducation)
+  );
+  const [formListWork, setListWork] = useState(structuredClone(templateFormListWork));
   const [activeIndex, setActiveIndex] = useState(0);
 
   function updateHandler(formList, setter) {
@@ -52,6 +59,9 @@ function App() {
           formList={formListPersonal}
           changeHandler={updateHandler(formListPersonal, setListPersonal)}
           formOptions={{ deletable: false, hideable: false }}
+          updateFormList={addForm(setListPersonal)}
+          formListTemplate={structuredClone(templateFormListPersonal)}
+          addable={{ add: false, title: "Education" }}
         />
       ),
 
@@ -61,6 +71,9 @@ function App() {
           formList={formListEducation}
           changeHandler={updateHandler(formListEducation, setListEducation)}
           formOptions={{ deletable: false, hideable: true }}
+          updateFormList={addForm(setListEducation)}
+          formListTemplate={structuredClone(templateFormListEducation)}
+          addable={{ add: true, title: "education" }}
         />
       ),
 
@@ -70,11 +83,20 @@ function App() {
           formList={formListWork}
           changeHandler={updateHandler(formListWork, setListWork)}
           formOptions={{ deletable: false, hideable: true }}
+          updateFormList={addForm(setListWork)}
+          formListTemplate={structuredClone(templateFormListWork)}
+          addable={{ add: true, title: "work" }}
         />
       ),
     };
 
     return content[index];
+  }
+
+  function addForm(setter) {
+    return function (newFormList) {
+      setter(newFormList);
+    };
   }
 
   return (
