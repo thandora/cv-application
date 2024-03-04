@@ -37,6 +37,12 @@
 
 .nav-button.active {
   border-right: 2px solid rgb(255, 255, 255);
+  color: white;
+}
+
+.nav-button.active:hover {
+  border: none;
+  border-right: 2px solid rgb(255, 255, 255);
 }
 
 .nav-button:hover {

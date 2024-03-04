@@ -43,7 +43,7 @@ function App() {
     return { ...form, fields: newFields };
   }
 
-  function displayNavContent(index) {
+  function getNavContent(index) {
     const content = {
       0: (
         <FormList
@@ -72,25 +72,35 @@ function App() {
         />
       ),
     };
+
     return content[index];
   }
 
   return (
     <>
       <nav className="navbar">
-        <button className="nav-button" onClick={() => setActiveIndex(0)}>
+        <button
+          className={activeIndex === 0 ? "nav-button active" : "nav-button"}
+          onClick={() => setActiveIndex(0)}
+        >
           <span className="material-symbols-outlined">person</span>
         </button>
 
-        <button className="nav-button" onClick={() => setActiveIndex(1)}>
+        <button
+          className={activeIndex === 1 ? "nav-button active" : "nav-button"}
+          onClick={() => setActiveIndex(1)}
+        >
           <span className="material-symbols-outlined">school</span>
         </button>
 
-        <button className="nav-button" onClick={() => setActiveIndex(2)}>
+        <button
+          className={activeIndex === 2 ? "nav-button active" : "nav-button"}
+          onClick={() => setActiveIndex(2)}
+        >
           <span className="material-symbols-outlined">business_center</span>
         </button>
       </nav>
-      <div className="nav-content">{displayNavContent(activeIndex)}</div>
+      <div className="nav-content">{getNavContent(activeIndex)}</div>
     </>
   );
 }
