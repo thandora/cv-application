@@ -24,7 +24,7 @@ function Display({ formLists }) {
   }
 
   // Education
-  function getEducationSection() {
+  function getWorkSection() {
     return (
       <div className="section-education">
         <h2>WORK EXPERIENCE</h2>
@@ -69,7 +69,7 @@ function Display({ formLists }) {
   return (
     <div className="cv-display">
       {getPersonalSection()}
-      {getEducationSection()}
+      {getWorkSection()}
     </div>
   );
 }
