@@ -5,6 +5,7 @@ import { useState } from "react";
 
 function App() {
   const [formListPersonal, setFormList] = useState(structuredClone(sampleFormListPersonal));
+  const [activeIndex, setActiveIndex] = useState(0);
 
   function updateFormList(formId) {
     return function (fieldId) {
@@ -34,9 +35,29 @@ function App() {
     return { ...form, fields: newFields };
   }
 
+  function displayNavContent(index) {
+    const content = {
+      0: <FormList formList={formListPersonal} changeHandler={updateFormList} />,
+    };
+    return content[index];
+  }
+
   return (
     <>
-      <FormList formList={formListPersonal} changeHandler={updateFormList} />
+      <nav className="navbar">
+        <button className="nav-button" onClick={() => setActiveIndex(0)}>
+          <span className="material-symbols-outlined">person</span>
+        </button>
+
+        <button className="nav-button" onClick={() => setActiveIndex(1)}>
+          <span className="material-symbols-outlined">school</span>
+        </button>
+
+        <button className="nav-button" onClick={() => setActiveIndex(2)}>
+          <span className="material-symbols-outlined">business_center</span>
+        </button>
+      </nav>
+      <div className="nav-content">{displayNavContent(activeIndex)}</div>
     </>
   );
 }
