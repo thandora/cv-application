@@ -5,6 +5,7 @@ import {
   sampleFormListWork,
 } from "./components/sampleData";
 import { FormList } from "./components/FormList";
+import { Display } from "./components/Display";
 import { useState } from "react";
 
 function App() {
@@ -100,7 +101,16 @@ function App() {
           <span className="material-symbols-outlined">business_center</span>
         </button>
       </nav>
+
       <div className="nav-content">{getNavContent(activeIndex)}</div>
+
+      <Display
+        formLists={{
+          personal: formListPersonal,
+          education: formListEducation,
+          work: formListWork,
+        }}
+      />
     </>
   );
 }
