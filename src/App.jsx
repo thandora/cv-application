@@ -1,11 +1,16 @@
 import "./styles/App.css";
-import { sampleFormListEducation, sampleFormListPersonal } from "./components/sampleData";
+import {
+  sampleFormListEducation,
+  sampleFormListPersonal,
+  sampleFormListWork,
+} from "./components/sampleData";
 import { FormList } from "./components/FormList";
 import { useState } from "react";
 
 function App() {
   const [formListPersonal, setListPersonal] = useState(structuredClone(sampleFormListPersonal));
   const [formListEducation, setListEducation] = useState(structuredClone(sampleFormListEducation));
+  const [formListWork, setListWork] = useState(structuredClone(sampleFormListWork));
   const [activeIndex, setActiveIndex] = useState(0);
 
   function updateHandler(formList, setter) {
@@ -42,15 +47,27 @@ function App() {
     const content = {
       0: (
         <FormList
+          hasTitle={false}
           formList={formListPersonal}
           changeHandler={updateHandler(formListPersonal, setListPersonal)}
           formOptions={{ deletable: false, hideable: false }}
         />
       ),
+
       1: (
         <FormList
+          hasTitle={false}
           formList={formListEducation}
           changeHandler={updateHandler(formListEducation, setListEducation)}
+          formOptions={{ deletable: false, hideable: true }}
+        />
+      ),
+
+      2: (
+        <FormList
+          hasTitle={false}
+          formList={formListWork}
+          changeHandler={updateHandler(formListWork, setListWork)}
           formOptions={{ deletable: false, hideable: true }}
         />
       ),
