@@ -64,4 +64,10 @@ const templateFormListWork = {
   forms: [templateFormWork],
 };
 
-export { templateFormListPersonal, templateFormListEducation, templateFormListWork };
+export {
+  templateFormListPersonal,
+  templateFormListEducation,
+  templateFormListWork,
+  templateFormEducation,
+  templateFormWork,
+};

@@ -8,6 +8,8 @@ import {
   templateFormListPersonal,
   templateFormListEducation,
   templateFormListWork,
+  templateFormWork,
+  templateFormEducation,
 } from "./components/dataTemplate";
 import { FormList } from "./components/FormList";
 import { Display } from "./components/Display";
@@ -59,8 +61,7 @@ function App() {
           formList={formListPersonal}
           changeHandler={updateHandler(formListPersonal, setListPersonal)}
           formOptions={{ deletable: false, hideable: false }}
-          updateFormList={addForm(setListPersonal)}
-          formListTemplate={structuredClone(templateFormListPersonal)}
+          updateFormList={() => {}}
           addable={{ add: false, title: "Education" }}
         />
       ),
@@ -71,8 +72,11 @@ function App() {
           formList={formListEducation}
           changeHandler={updateHandler(formListEducation, setListEducation)}
           formOptions={{ deletable: false, hideable: true }}
-          updateFormList={addForm(setListEducation)}
-          formListTemplate={structuredClone(templateFormListEducation)}
+          updateFormList={addForm(
+            setListEducation,
+            formListEducation,
+            structuredClone(templateFormEducation)
+          )}
           addable={{ add: true, title: "education" }}
         />
       ),
@@ -83,8 +87,7 @@ function App() {
           formList={formListWork}
           changeHandler={updateHandler(formListWork, setListWork)}
           formOptions={{ deletable: false, hideable: true }}
-          updateFormList={addForm(setListWork)}
-          formListTemplate={structuredClone(templateFormListWork)}
+          updateFormList={addForm(setListWork, formListWork, structuredClone(templateFormWork))}
           addable={{ add: true, title: "work" }}
         />
       ),
@@ -93,8 +96,11 @@ function App() {
     return content[index];
   }
 
-  function addForm(setter) {
-    return function (newFormList) {
+  function addForm(setter, formList, formTemplate) {
+    return function () {
+      const newForm = { ...formTemplate, id: crypto.randomUUID() };
+      const newForms = [...formList.forms, newForm];
+      const newFormList = { ...formList, forms: newForms };
       setter(newFormList);
     };
   }
