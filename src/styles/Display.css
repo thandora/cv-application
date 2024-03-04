@@ -1,0 +1,28 @@
+.cv-display {
+  background-color: #ffffff;
+  color: black;
+  width: 800px;
+  font-family: "EB Garmond", serif;
+  padding: 12px;
+}
+
+.section-personal {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.cv-display h1 {
+  font-size: 26px;
+  margin-bottom: 0;
+}
+
+.personal-last-row {
+  border-bottom: 1px solid black;
+  width: 100%;
+  display: flex;
+}
+
+.personal-last-row a {
+  padding-top: 2px;
+}
