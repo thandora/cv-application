@@ -18,7 +18,7 @@ const fieldsEducation = [
   { id: crypto.randomUUID(), name: "Graduation Month", type: "text", value: "", removable: false },
   { id: crypto.randomUUID(), name: "Graduation Year", type: "text", value: "", removable: false },
   { id: crypto.randomUUID(), name: "Address", type: "text", value: "", removable: false },
-  { id: crypto.randomUUID(), name: "Highlights", type: "text", value: "", removable: true },
+  { id: crypto.randomUUID(), name: "Highlight", type: "text", value: "", removable: true },
 ];
 
 const fieldsWork = [
