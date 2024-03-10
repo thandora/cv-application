@@ -23,10 +23,10 @@ function Display({ formLists }) {
     );
   }
 
-  // Education
+  // Work
   function getWorkSection() {
     return (
-      <div className="section-education">
+      <div className="section-work">
         <h2>WORK EXPERIENCE</h2>
         {work.forms.map(getFieldsDom)}
       </div>
@@ -66,10 +66,51 @@ function Display({ formLists }) {
     }
   }
 
+  function getEducationSection() {
+    return (
+      <div className="section-education">
+        <h2>EDUCATION</h2>
+        {education.forms.map(getFieldsDom)}
+      </div>
+    );
+
+    function getFieldsDom(form) {
+      const eUniversity = form.fields.find((f) => f.name === "University Name").value;
+      const eDegree = form.fields.find((f) => f.name === "Degree").value;
+      const eMonthEnd = form.fields.find((f) => f.name === "Graduation Month").value;
+      const eYeartEnd = form.fields.find((f) => f.name === "Graduation Year").value;
+      const eAddress = form.fields.find((f) => f.name === "Address").value;
+      const eHighlights = form.fields.filter((f) => f.name === "Highlight");
+
+      return (
+        <Fragment key={crypto.randomUUID()}>
+          <div className="first-row">
+            <h2>{eUniversity}</h2>
+            <p>
+              {eMonthEnd} {eYeartEnd}
+            </p>
+          </div>
+
+          <div className="second-row">
+            <em>{eDegree}</em>
+            <em>{eAddress}</em>
+          </div>
+
+          <ul>
+            {eHighlights.map((h) => {
+              return <li key={crypto.randomUUID()}>{h.value}</li>;
+            })}
+          </ul>
+        </Fragment>
+      );
+    }
+  }
+
   return (
     <div className="cv-display">
       {getPersonalSection()}
       {getWorkSection()}
+      {getEducationSection()}
     </div>
   );
 }
