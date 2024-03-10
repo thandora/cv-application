@@ -2,7 +2,16 @@ import "../styles/FormList.css";
 import PropTypes from "prop-types";
 import { Form } from "./Form";
 
-function FormList({ formList, changeHandler, formOptions, hasTitle, updateFormList, addable }) {
+function FormList({
+  formList,
+  changeHandler,
+  formOptions,
+  hasTitle,
+  updateFormList,
+  addable,
+  addableField,
+  formListUpdater,
+}) {
   return (
     <div className="forms-list">
       <div className="header">{hasTitle && <h2>{formList.title}</h2>}</div>
@@ -15,6 +24,8 @@ function FormList({ formList, changeHandler, formOptions, hasTitle, updateFormLi
               form={form}
               options={formOptions}
               changeHandler={changeHandler(form.id)}
+              addableField={addableField}
+              formListUpdater={formListUpdater}
             />
           );
         })}
@@ -40,6 +51,8 @@ FormList.propTypes = {
   formOptions: PropTypes.object,
   updateFormList: PropTypes.func,
   addable: PropTypes.object,
+  addableField: PropTypes.object,
+  formListUpdater: PropTypes.func,
 };
 
 export { FormList };

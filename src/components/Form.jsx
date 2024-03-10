@@ -3,12 +3,24 @@ import PropTypes from "prop-types";
 import { Fragment, useState } from "react";
 import { Field } from "./Field";
 
-function Form({ form, changeHandler, options = { deletable: false, hideable: false } }) {
+function Form({
+  form,
+  changeHandler,
+  addableField = { addable: false, fieldTemplate: {} },
+  options = { deletable: false, hideable: false },
+  formListUpdater,
+}) {
   const [visible, setVisiblility] = useState(true);
   const { deletable, hideable } = options;
 
   function toggleVisibility() {
     setVisiblility(!visible);
+  }
+
+  function addField(fieldTemplate) {
+    const newField = { ...fieldTemplate, id: crypto.randomUUID() };
+    const newForm = { ...form, fields: [...form.fields, newField] };
+    formListUpdater(newForm);
   }
 
   return (
@@ -33,6 +45,17 @@ function Form({ form, changeHandler, options = { deletable: false, hideable: fal
             </Fragment>
           );
         })}
+
+        {addableField.addable && (
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              addField(addableField.fieldTemplate);
+            }}
+          >
+            Add {addableField.fieldTemplate.name}
+          </button>
+        )}
       </form>
     </div>
   );
@@ -45,6 +68,8 @@ Form.propTypes = {
   deletable: PropTypes.bool,
   changeHandler: PropTypes.func,
   options: PropTypes.object,
+  addableField: PropTypes.object,
+  formListUpdater: PropTypes.func,
 };
 
 export { Form };

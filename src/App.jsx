@@ -1,10 +1,5 @@
 import "./styles/App.css";
 import {
-  sampleFormListEducation,
-  sampleFormListPersonal,
-  sampleFormListWork,
-} from "./components/sampleData";
-import {
   templateFormListPersonal,
   templateFormListEducation,
   templateFormListWork,
@@ -42,6 +37,18 @@ function App() {
     };
   }
 
+  function updateFormList(formList, formListSetter) {
+    return function (newForm) {
+      const newForms = formList.forms.map((f) => {
+        if (f.id === newForm.id) {
+          return newForm;
+        }
+        return f;
+      });
+      formListSetter({ ...formList, forms: newForms });
+    };
+  }
+
   function updateForm(form, fieldId, e) {
     const newFields = form.fields.map((field) => {
       if (field.id === fieldId) {
@@ -54,6 +61,12 @@ function App() {
   }
 
   function getNavContent(index) {
+    const highlightFieldTemplate = {
+      ...templateFormEducation.fields.find((f) => {
+        return f.name === "Highlight";
+      }),
+    };
+
     const content = {
       0: (
         <FormList
@@ -78,6 +91,8 @@ function App() {
             structuredClone(templateFormEducation)
           )}
           addable={{ add: true, title: "education" }}
+          addableField={{ addable: true, fieldTemplate: highlightFieldTemplate }}
+          formListUpdater={updateFormList(formListEducation, setListEducation)}
         />
       ),
 

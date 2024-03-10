@@ -74,7 +74,7 @@ const fieldsEducation = [
   },
   {
     id: crypto.randomUUID(),
-    name: "Highlights",
+    name: "Highlight",
     type: "text",
     value: "Magna Cum Laude",
     removable: true,
