@@ -23,6 +23,17 @@ function Form({
     formListUpdater(newForm);
   }
 
+  function removeField(fieldId) {
+    return function () {
+      const newFields = form.fields.filter((field) => {
+        return field.id !== fieldId;
+      });
+
+      const newForm = { ...form, fields: newFields };
+      formListUpdater(newForm);
+    };
+  }
+
   return (
     <div className="form-container">
       <div className="header">
@@ -41,6 +52,8 @@ function Form({
                 type={field.type}
                 value={field.value}
                 changeHandler={changeHandler(field.id)}
+                removeFieldHandler={removeField(field.id)}
+                removable={field.removable}
               />
             </Fragment>
           );
