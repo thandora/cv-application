@@ -66,6 +66,11 @@ function App() {
         return f.name === "Highlight";
       }),
     };
+    const highlightResponsibilityTemplate = {
+      ...templateFormWork.fields.find((f) => {
+        return f.name === "Responsibility";
+      }),
+    };
 
     const content = {
       0: (
@@ -104,6 +109,8 @@ function App() {
           formOptions={{ deletable: false, hideable: true }}
           updateFormList={addForm(setListWork, formListWork, structuredClone(templateFormWork))}
           addable={{ add: true, title: "work" }}
+          addableField={{ addable: true, fieldTemplate: highlightResponsibilityTemplate }}
+          formListUpdater={updateFormList(formListWork, setListWork)}
         />
       ),
     };
